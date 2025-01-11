@@ -1,53 +1,54 @@
 <?php
 
-require "database.php";
+// require "database.php";
 
-// Récupération de tous les participants
+// // Récupération de tous les participants
 
-$query = $bdd->prepare('SELECT name FROM participants');
-$query->execute();
-$givers = $query->fetchAll(PDO::FETCH_ASSOC);
+// $query = $bdd->prepare('SELECT name FROM participants');
+// $query->execute();
+// $givers = $query->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump("LES DONNEURS", $givers);
+// var_dump("LES DONNEURS", $givers);
+
+
+
+
+
 
 
 
 
 // LOGIQUE POUR LE TIRAGE AU SORT
+$givers = ['Isabelle', 'Luc', 'Pierre', 'Paul', 'Elodie', 'manu'];
 
-$shuffled = $givers;
-shuffle($shuffled);
-var_dump($shuffled);
+// Mélange des donneurs
+$shuffledGivers = $givers; // Copier le tableau pour le ré
+shuffle($shuffledGivers); // Mélange des donneurs
 
-$receivers = [];
+var_dump("DONNEURS MIXED", $shuffledGivers);
 
-for ($i = 0; $i < count($shuffled); $i++) {
+// Copie des donneurs mélangés pour les récepteurs
+$receivers = $shuffledGivers;
 
-    if (!isset($receivers[$i])) { // si l'indice n'est pas occupé à cet endroit dans le tableau receivers
-        if ($shuffled[$i] !== $givers[$i]) {  // et si les valeurs correspondantes des tableaux "suffled" et "givers" ne sont pas pareilles
-            $receivers[$i] = $shuffled[$i];   // alors on assigne la valeur de shuffled à l'indice correspondant dans le tableau receivers
-        } else {
+// Décalage circulaire des récepteurs pour éviter que le donneur ne soit son propre récepteur
+do {
+    // Décalage circulaire: on retire le dernier élément et on le remet au début
+    $lastReceiver = array_pop($receivers);
+    array_unshift($receivers, $lastReceiver);
 
-            $receivers[$i + 1] = $shuffled[$i]; // sinon on assigne la valeur de suffle à l'indice d'après du tableau receivers
+    // Vérification que chaque donneur ne donne pas à lui-même
+    $isValid = true;
+    for ($i = 0; $i < count($givers); $i++) {
+        if ($givers[$i] == $receivers[$i]) {
+            $isValid = false;
+            break;
         }
-    } else {
-        // Si l'indice est déjà occupé, on cherche un autre indice libre
-        $j = $i + 1;  // On commence à l'indice suivant
-
-        // On cherche un indice libre :  tant que l'indice receivers cherché est occupé on passe à l'indice suivant avec j++
-        while (isset($receivers[$j])) {  //isset($receivers[$j]) retourne true
-            $j++;  // Donc on cherche encore et nn passe à l'indice suivant
-        }
-
-        // Une fois un indice libre trouvé, sort de la boucle while et on l'assigne
-        $receivers[$j] = $shuffled[$i];
     }
-}
-// Affichage final
-var_dump("LES RECEVEURS", $receivers);
+} while (!$isValid); // Recommence tant qu'il y a des correspondances entre un donneur et son récepteur
 
-
+var_dump("RECEVEURS", $receivers);
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -89,8 +90,8 @@ var_dump("LES RECEVEURS", $receivers);
         // On affiche le tableau avec les donneurs et récepteurs
         for ($i = 0; $i < count($givers); $i++) {
             echo '<tr>';
-            echo '<td>' . htmlspecialchars($givers[$i]['name']) . '</td>'; // Affiche le nom du donneur
-            echo '<td>' . htmlspecialchars($receivers[$i]['name']) . '</td>'; // Affiche le nom du récepteur
+            echo '<td>' . htmlspecialchars($givers[$i]) . '</td>'; // Affiche le nom du donneur
+            echo '<td>' . htmlspecialchars($receivers[$i]) . '</td>'; // Affiche le nom du récepteur
             echo '</tr>';
         }
         ?>
