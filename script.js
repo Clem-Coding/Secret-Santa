@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     nameCell.innerHTML = `
           <div class="mb-3">
             <label for="name" class="form-label visually-hidden">Nom</label>
-            <input type="text" class="form-control" id="name" aria-describedby="nameHelp" required />
+            <input type="text" class="form-control" id="name" name="name[]" aria-describedby="nameHelp" required />
           </div>
           `;
 
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     emailCell.innerHTML = `
           <div class="mb-3">
             <label for="mail" class="form-label visually-hidden">Email</label>
-            <input type="email" class="form-control" id="mail" aria-describedby="emailHelp" required />
+            <input type="email" class="form-control" id="mail" name="email[]" aria-describedby="emailHelp" required />
           </div>
         `;
 

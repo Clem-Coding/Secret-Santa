@@ -12,9 +12,13 @@
     />
   </head>
   <body>
+    <header class="bg-danger text-white text-center py-4">
+      <h1>Le Père Noël Secret</h1>
+    </header>
+
     <main>
       <div class="container">
-        <form>
+        <form method="POST" action="add-participants.php">
           <table class="table">
             <thead>
               <tr>
@@ -34,11 +38,11 @@
                       class="form-control"
                       id="name"
                       aria-describedby="nameHelp"
+                      placeholder="Votre nom"
+                      name="name[]"
                       required
                     />
-                    <div id="nameHelp" class="form-text">
-                      Entrez votre nom complet.
-                    </div>
+                    
                   </div>
                 </td>
                 <td>
@@ -51,10 +55,11 @@
                       class="form-control"
                       id="mail"
                       aria-describedby="emailHelp"
+                      placeholder="Rentrez votre mail"
+                      name ="email[]"
                       required
                     />
-                    <div id="emailHelp" class="form-text">
-                      Entrez une adresse email valide.
+                   
                     </div>
                   </div>
                 </td>
@@ -62,7 +67,9 @@
             </tbody>
           </table>
           <button class="btn btn-primary btn-js">Ajouter une ligne</button>
-          <button type="submit" class="btn btn-success">Envoyer</button>
+          <button type="submit" class="btn btn-success" name="validate">
+            Tirage au sort
+          </button>
         </form>
       </div>
     </main>
