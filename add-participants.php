@@ -10,9 +10,7 @@ if (isset($_POST['validate'])) {
     if (!empty($_POST['name']) && !empty($_POST['email'])) {
 
 
-        //htmlspecialchars — Convertit les caractères spéciaux en entités HTML; conseillé pour éviter 
-        //certains types de vulnérabilités liées à la sécurité, comme les attaques de type Cross-Site Scripting (XSS).
-        // ex : <script> devient "&lt;script&gt"
+
 
 
         $participant_names = array_map('htmlspecialchars', $_POST['name']);
@@ -41,4 +39,6 @@ if (isset($_POST['validate'])) {
 
         echo "Les champs ne sont pas tous remplis";
     }
+
+    header('Location: results.php');
 }

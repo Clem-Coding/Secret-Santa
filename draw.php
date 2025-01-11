@@ -12,25 +12,39 @@ $givers = $query->fetchAll(PDO::FETCH_ASSOC);
 
 // LOGIQUE POUR LE TIRAGE AU SORT
 
-$receivers = $givers; // On copie les données du tableau givers
-$validAssignment = false; // on initialise une variable de désignationd des cadeaux à false
-while (!$validAssignment) {
+function drawGifts($givers)
+{
+    $givers = $givers;
+    $receivers = $givers;
+    $validAssignment = false;
 
-    shuffle($receivers); // Mélange du tableau receivers pour les désignations
+    while (!$validAssignment) {
+        shuffle($receivers); // Mélange les receveurs
+        $validAssignment = true;
 
-    $validAssignment = true; // Les désignations sont faites donc on met à true
-
-    for ($i = 0; $i < count($givers); $i++) {
-        if ($givers[$i] === $receivers[$i]) {
-            $validAssignment = false; // Si un donneur est affecté à lui-même, on sort de la boucle for et on reShuffle, ceci jusqu'à ce qu'il n'ait plus de correpsondances
-            break;
+        // Vérifie si un donneur est affecté à lui-même
+        for ($i = 0; $i < count($givers); $i++) {
+            if ($givers[$i] === $receivers[$i]) {
+                $validAssignment = false;
+                break;
+            }
         }
     }
+
+    return ['givers' => $givers, 'receivers' => $receivers];
 }
 
-?>
 
-<!-- <!DOCTYPE html>
+
+
+// Appel de la fonction pour effectuer le tirage
+$result = drawGifts($givers);
+$givers = $result['givers'];
+$receivers = $result['receivers'];
+
+?>
+<!-- 
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -80,4 +94,7 @@ while (!$validAssignment) {
 
 </body>
 
-</html> -->
+</html>
+
+
+ -->
