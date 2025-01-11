@@ -1,55 +1,36 @@
 <?php
 
-// require "database.php";
+require "database.php";
 
-// // Récupération de tous les participants
+// Récupération de tous les participants
 
-// $query = $bdd->prepare('SELECT name FROM participants');
-// $query->execute();
-// $givers = $query->fetchAll(PDO::FETCH_ASSOC);
-
-// var_dump("LES DONNEURS", $givers);
-
-
-
-
-
-
+$query = $bdd->prepare('SELECT name FROM participants');
+$query->execute();
+$givers = $query->fetchAll(PDO::FETCH_ASSOC);
 
 
 
 // LOGIQUE POUR LE TIRAGE AU SORT
-$givers = ['Isabelle', 'Luc', 'Pierre', 'Paul', 'Elodie', 'manu'];
 
-// Mélange des donneurs
-$shuffledGivers = $givers; // Copier le tableau pour le ré
-shuffle($shuffledGivers); // Mélange des donneurs
+$receivers = $givers; // On copie les données du tableau givers
+$validAssignment = false; // on initialise une variable de désignationd des cadeaux à false
+while (!$validAssignment) {
 
-var_dump("DONNEURS MIXED", $shuffledGivers);
+    shuffle($receivers); // Mélange du tableau receivers pour les désignations
 
-// Copie des donneurs mélangés pour les récepteurs
-$receivers = $shuffledGivers;
+    $validAssignment = true; // Les désignations sont faites donc on met à true
 
-// Décalage circulaire des récepteurs pour éviter que le donneur ne soit son propre récepteur
-do {
-    // Décalage circulaire: on retire le dernier élément et on le remet au début
-    $lastReceiver = array_pop($receivers);
-    array_unshift($receivers, $lastReceiver);
-
-    // Vérification que chaque donneur ne donne pas à lui-même
-    $isValid = true;
     for ($i = 0; $i < count($givers); $i++) {
-        if ($givers[$i] == $receivers[$i]) {
-            $isValid = false;
+        if ($givers[$i] === $receivers[$i]) {
+            $validAssignment = false; // Si un donneur est affecté à lui-même, on sort de la boucle for et on reShuffle, ceci jusqu'à ce qu'il n'ait plus de correpsondances
             break;
         }
     }
-} while (!$isValid); // Recommence tant qu'il y a des correspondances entre un donneur et son récepteur
+}
 
-var_dump("RECEVEURS", $receivers);
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -90,8 +71,8 @@ var_dump("RECEVEURS", $receivers);
         // On affiche le tableau avec les donneurs et récepteurs
         for ($i = 0; $i < count($givers); $i++) {
             echo '<tr>';
-            echo '<td>' . htmlspecialchars($givers[$i]) . '</td>'; // Affiche le nom du donneur
-            echo '<td>' . htmlspecialchars($receivers[$i]) . '</td>'; // Affiche le nom du récepteur
+            echo '<td>' . htmlspecialchars($givers[$i]['name']) . '</td>'; // Affiche le nom du donneur
+            echo '<td>' . htmlspecialchars($receivers[$i]['name']) . '</td>'; // Affiche le nom du récepteur
             echo '</tr>';
         }
         ?>
@@ -99,4 +80,4 @@ var_dump("RECEVEURS", $receivers);
 
 </body>
 
-</html>
+</html> -->
