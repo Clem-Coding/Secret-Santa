@@ -1,8 +1,16 @@
 <?php
+session_start();
 
 
-require 'draw.php';
+if (isset($_SESSION['givers']) && isset($_SESSION['receivers'])) {
 
+    $givers = $_SESSION['givers'];
+    $receivers = $_SESSION['receivers'];
+} else {
+
+    header('Location: index.php');
+    exit;
+}
 
 ?>
 
@@ -19,9 +27,12 @@ require 'draw.php';
 </head>
 
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Tirage au sort des Donneurs et Receveurs</h2>
+    <header class="bg-danger text-white text-center py-4">
+        <h1 class="text-center mb-4">Résultat du tirage au sort</h1>
+    </header>
 
+
+    <div class="container mt-5">
         <table class="table table-bordered table-striped">
             <thead class="thead-light">
                 <tr>
@@ -33,8 +44,8 @@ require 'draw.php';
                 <?php
                 for ($i = 0; $i < count($givers); $i++) {
                     echo '<tr>';
-                    echo '<td>' . htmlspecialchars($givers[$i]['name']) . '</td>';
-                    echo '<td>' . htmlspecialchars($receivers[$i]['name']) . '</td>';
+                    echo '<td>' . htmlspecialchars($givers[$i]) . '</td>';
+                    echo '<td>' . htmlspecialchars($receivers[$i]) . '</td>';
                 }
                 ?>
 
