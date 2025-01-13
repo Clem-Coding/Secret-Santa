@@ -1,6 +1,5 @@
 <?php
-session_start(); // Démarrer la session
-
+session_start();
 
 
 if (isset($_POST['validate'])) {
@@ -22,7 +21,7 @@ if (isset($_POST['validate'])) {
 
 
 
-            function drawGifts($givers)
+            function drawGifts($givers): array
             {
 
                 $receivers = $givers;
@@ -53,7 +52,7 @@ if (isset($_POST['validate'])) {
             var_dump($receivers);
 
 
-            // Stocker les résultats dans la session
+
             $_SESSION['givers'] = $givers;
             $_SESSION['receivers'] = $receivers;
 

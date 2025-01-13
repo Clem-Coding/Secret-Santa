@@ -31,27 +31,28 @@ if (isset($_SESSION['givers']) && isset($_SESSION['receivers'])) {
         <h1 class="text-center mb-4">Résultat du tirage au sort</h1>
     </header>
 
+    <main>
+        <div class="container mt-5">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Donneurs</th>
+                        <th scope="col">Receveurs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    for ($i = 0; $i < count($givers); $i++) {
+                        echo '<tr>';
+                        echo '<td>' . htmlspecialchars($givers[$i]) . '</td>';
+                        echo '<td>' . htmlspecialchars($receivers[$i]) . '</td>';
+                    }
+                    ?>
 
-    <div class="container mt-5">
-        <table class="table table-bordered table-striped">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Donneurs</th>
-                    <th scope="col">Receveurs</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                for ($i = 0; $i < count($givers); $i++) {
-                    echo '<tr>';
-                    echo '<td>' . htmlspecialchars($givers[$i]) . '</td>';
-                    echo '<td>' . htmlspecialchars($receivers[$i]) . '</td>';
-                }
-                ?>
-
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
+    </main>
 </body>
 
 </html>

@@ -29,6 +29,7 @@
                         <tr>
                             <td>
                                 <div class="mb-3">
+                                    <label for="name" class="visually-hidden">Nom</label>
                                     <input
                                         type="text"
                                         class="form-control"
@@ -40,6 +41,7 @@
                             </td>
                             <td>
                                 <div class="mb-3">
+                                    <label for="mail" class="visually-hidden">Email</label>
                                     <input
                                         type="email"
                                         class="form-control"
@@ -50,7 +52,7 @@
                                 </div>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-danger deleteBtn">
+                                <button type="button" class="btn btn-danger deleteBtn" aria-label="Supprimer la ligne">
                                     <span class="bi bi-trash-fill"></span>
                                 </button>
                             </td>
